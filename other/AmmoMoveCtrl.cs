@@ -111,7 +111,8 @@ public class AmmoMoveCtrl : MonoBehaviour
 
         if (LiZiPrefab != null)
         {
-            Instantiate(LiZiPrefab, transform.position, transform.rotation);
+            GameObject obj = (GameObject)Instantiate(LiZiPrefab, transform.position, transform.rotation);
+            SSMissionCleanup.GetInstance().AddObj(obj);
         }
         Destroy(gameObject);
     }

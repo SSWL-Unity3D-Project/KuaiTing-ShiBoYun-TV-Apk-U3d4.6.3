@@ -148,10 +148,11 @@ public class DaoJuCtrl : MonoBehaviour
         IsDestroyThis = true;
 
         if (LiZiPrefab != null)
-        {	
-			Instantiate(LiZiPrefab, transform.position, transform.rotation);
-//			Instantiate(LiZiPrefab, PlayerController.GetInstance().DaoJuLiZiSpawnTr.position,
-//			            PlayerController.GetInstance().DaoJuLiZiSpawnTr.rotation);
+        {
+            //Instantiate(LiZiPrefab, PlayerController.GetInstance().DaoJuLiZiSpawnTr.position,
+            //            PlayerController.GetInstance().DaoJuLiZiSpawnTr.rotation);
+            GameObject obj = (GameObject)Instantiate(LiZiPrefab, transform.position, transform.rotation);
+            SSMissionCleanup.GetInstance().AddObj(obj);
         }
 
         if (PlayerController.GetInstance() != null)

@@ -39,7 +39,9 @@ public class TriggerYanHua : MonoBehaviour
         {
             indexYanHua = countNum % YanHuaPrefabArray.Length;
             indexYanHuaPoint = countNum % SpawnPointArray.Length;
-            Instantiate(YanHuaPrefabArray[indexYanHua], SpawnPointArray[indexYanHuaPoint].position, SpawnPointArray[indexYanHuaPoint].rotation);
+            GameObject obj = (GameObject)Instantiate(YanHuaPrefabArray[indexYanHua], SpawnPointArray[indexYanHuaPoint].position, SpawnPointArray[indexYanHuaPoint].rotation);
+            SSMissionCleanup.GetInstance().AddObj(obj);
+
             countNum++;
             if (countNum >= MaxYanHua)
             {

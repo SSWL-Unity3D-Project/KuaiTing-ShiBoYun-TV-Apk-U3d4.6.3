@@ -31,12 +31,14 @@ public class DestroyThisTimed : MonoBehaviour
     {
         if (LiZiPrefab != null)
         {
-            Instantiate(LiZiPrefab, transform.position, transform.rotation);
+            GameObject obj = (GameObject)Instantiate(LiZiPrefab, transform.position, transform.rotation);
+            SSMissionCleanup.GetInstance().AddObj(obj);
         }
 
         if (BaoXiangPrefab != null)
         {
-            Instantiate(BaoXiangPrefab, transform.position, transform.rotation);
+            GameObject obj = (GameObject)Instantiate(BaoXiangPrefab, transform.position, transform.rotation);
+            SSMissionCleanup.GetInstance().AddObj(obj);
         }
         Destroy(gameObject);
     }

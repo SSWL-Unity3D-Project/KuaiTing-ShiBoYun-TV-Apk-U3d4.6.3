@@ -116,14 +116,14 @@ public class spawnNpcScript : MonoBehaviour {
 	{
 		//NPCObj = Instantiate(NPCPrefab, transform.position, Quaternion.identity) as GameObject;
 		NPCObj = Instantiate(NPCPrefab, transform.position, transform.rotation) as GameObject;
-
 		if (!NPCObj)
 		{
 			return;
-		}
-		
-		//find the NPC scritp and init the information of the NPC
-		scriptObj = NPCObj.GetComponent<npcScript>();
+        }
+        SSMissionCleanup.GetInstance().AddObj(NPCObj);
+
+        //find the NPC scritp and init the information of the NPC
+        scriptObj = NPCObj.GetComponent<npcScript>();
 		
 		if (!scriptObj)
 		{

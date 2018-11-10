@@ -70,7 +70,6 @@ public class Loading : MonoBehaviour
 			m_FreeTexture.enabled = true;
 		}
 		m_Loading.SetActive(false);
-
 		InputEventCtrl.GetInstance().mListenPcInputEvent.ClickSetEnterBtEvent += ClickSetEnterBtEvent;
         if (GameMode == ReadGameInfo.GameMode.Free.ToString())
         {

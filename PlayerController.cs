@@ -652,8 +652,9 @@ public class PlayerController : MonoBehaviour
 				if(m_IsInWarter && !m_IsOnRoad)
 				{
 					m_HitWater.Play();
-					GameObject Tobject = (GameObject)Instantiate(m_HitWaterParticle,transform.position+transform.forward*m_BaozhaForward+Vector3.up*m_BaozhaUp,transform.rotation);
-					Destroy(Tobject,0.5f);
+					GameObject tobject = (GameObject)Instantiate(m_HitWaterParticle,transform.position+transform.forward*m_BaozhaForward+Vector3.up*m_BaozhaUp,transform.rotation);
+                    SSMissionCleanup.GetInstance().AddObj(tobject);
+                    Destroy(tobject,0.5f);
 				}
 				else
 				{
@@ -909,8 +910,9 @@ public class PlayerController : MonoBehaviour
 				if(!m_FeibanAudio.isPlaying && !m_hasplay)
 				{
 					m_FeibanAudio.Play();
-					Instantiate(m_FeibanEffectObj,transform.localPosition,transform.rotation);
-					m_hasplay = true;
+					GameObject obj = (GameObject)Instantiate(m_FeibanEffectObj,transform.localPosition,transform.rotation);
+                    SSMissionCleanup.GetInstance().AddObj(obj);
+                    m_hasplay = true;
 				}
 				canDrive = false;
 				m_IsOffShuihua = true;
@@ -1168,8 +1170,9 @@ public class PlayerController : MonoBehaviour
 				}
 				m_CameraShake.setCameraShakeImpulseValue();
 				m_HitStone.Play();
-				Instantiate(m_HitEffectObj,transform.position,transform.rotation);
-			}
+				GameObject obj = (GameObject)Instantiate(m_HitEffectObj,transform.position,transform.rotation);
+                SSMissionCleanup.GetInstance().AddObj(obj);
+            }
 		}
 		if(other.tag == "zhaoshi")
 		{
@@ -1193,8 +1196,9 @@ public class PlayerController : MonoBehaviour
 				m_IsHitshake = true;
 				m_CameraShake.setCameraShakeImpulseValue();
 				m_HitStone.Play();
-				Instantiate(m_HitEffectObj,other.transform.position,other.transform.rotation);
-			}
+				GameObject obj = (GameObject)Instantiate(m_HitEffectObj,other.transform.position,other.transform.rotation);
+                SSMissionCleanup.GetInstance().AddObj(obj);
+            }
 		}
         //gzknu
 		//if(other.tag == "zhiwu")
@@ -1229,8 +1233,9 @@ public class PlayerController : MonoBehaviour
 				}
 				m_CameraShake.setCameraShakeImpulseValue();
 				m_HitStone.Play();
-				Instantiate(m_HitEffectObj,transform.position,transform.rotation);
-			}
+				GameObject obj = (GameObject)Instantiate(m_HitEffectObj,transform.position,transform.rotation);
+                SSMissionCleanup.GetInstance().AddObj(obj);
+            }
 			npc1.m_IsHit = true;
 			npc1.m_PlayerHit = transform.position;
 			npc1.m_NpcPos = npc1Pos.position;
@@ -1246,8 +1251,9 @@ public class PlayerController : MonoBehaviour
 				}
 				m_CameraShake.setCameraShakeImpulseValue();
 				m_HitStone.Play();
-				Instantiate(m_HitEffectObj,transform.position,transform.rotation);
-			}
+				GameObject obj = (GameObject)Instantiate(m_HitEffectObj,transform.position,transform.rotation);
+                SSMissionCleanup.GetInstance().AddObj(obj);
+            }
 			npc2.m_IsHit = true;
 			npc2.m_PlayerHit = transform.position;
 			npc2.m_NpcPos = npc2Pos.position;
@@ -1263,7 +1269,8 @@ public class PlayerController : MonoBehaviour
 				}
                 m_CameraShake.setCameraShakeImpulseValue();
                 m_HitStone.Play();
-                Instantiate(m_HitEffectObj, transform.position, transform.rotation);
+                GameObject obj = (GameObject)Instantiate(m_HitEffectObj, transform.position, transform.rotation);
+                SSMissionCleanup.GetInstance().AddObj(obj);
             }
             npc3.m_IsHit = true;
             npc3.m_PlayerHit = transform.position;
@@ -1325,7 +1332,8 @@ public class PlayerController : MonoBehaviour
 			m_EatJiasuAudio.Play();
 			m_JiasuAudio.Play();
 			GameObject temp = (GameObject)Instantiate(m_JiasuPartical,other.transform.position,other.transform.rotation);
-			Destroy(temp,0.5f);
+            SSMissionCleanup.GetInstance().AddObj(temp);
+            Destroy(temp,0.5f);
 			Destroy(other.gameObject);
 		}
 		if(other.tag == "zhong" && !m_UIController.m_IsGameOver)
@@ -1333,7 +1341,8 @@ public class PlayerController : MonoBehaviour
 			m_IsHitshake = true;
 			//pcvr.GetInstance().OpenFangXiangPanZhenDong();
 			GameObject temp = (GameObject)Instantiate(m_JiashiPartical,other.transform.position,other.transform.rotation);
-			Destroy(other.gameObject);
+            SSMissionCleanup.GetInstance().AddObj(temp);
+            Destroy(other.gameObject);
 			Destroy(temp,0.5f);
 			m_EatJiashiAudio.Play();
 			m_JiashiAudio.Play();
@@ -1577,7 +1586,8 @@ public class PlayerController : MonoBehaviour
             case DaoJuCtrl.DaoJuType.PenQiJiaSu:
                 {
                     SetAcitveChuanTouShuiHuaTX(false);
-                    Instantiate(PenQiPrefab, DaoJuDiaoLuoTr[0].position, DaoJuDiaoLuoTr[0].rotation);
+                    GameObject obj = (GameObject)Instantiate(PenQiPrefab, DaoJuDiaoLuoTr[0].position, DaoJuDiaoLuoTr[0].rotation);
+                    SSMissionCleanup.GetInstance().AddObj(obj);
                     for (int i = 0; i < PenQiAniAy.Length; i++)
                     {
                         PenQiAniAy[i].transform.localScale = Vector3.zero;
@@ -1590,7 +1600,8 @@ public class PlayerController : MonoBehaviour
                     m_pChuan.localPosition -= new Vector3(0f, PlayerHightFeiXing, 0f);
                     SpawnJiFenTr.localPosition -= new Vector3(0f, PlayerHightShuangYiFeiJi, 0f);
                     m_CameraSmooth.SetCameraUpPos(-PlayerHightFeiXing);
-                    Instantiate(FeiXingYiPrefab, DaoJuDiaoLuoTr[1].position, DaoJuDiaoLuoTr[1].rotation);
+                    GameObject obj = (GameObject)Instantiate(FeiXingYiPrefab, DaoJuDiaoLuoTr[1].position, DaoJuDiaoLuoTr[1].rotation);
+                    SSMissionCleanup.GetInstance().AddObj(obj);
                     for (int i = 0; i < FiXingYiAniAy.Length; i++)
                     {
                         FiXingYiAniAy[i].transform.localScale = Vector3.zero;
@@ -1603,7 +1614,8 @@ public class PlayerController : MonoBehaviour
                     m_pChuan.localPosition -= new Vector3(0f, PlayerHightShuangYiFeiJi, 0f);
                     SpawnJiFenTr.localPosition -= new Vector3(0f, PlayerHightShuangYiFeiJi, 0f);
                     m_CameraSmooth.SetCameraUpPos(-PlayerHightShuangYiFeiJi);
-                    Instantiate(ShuangYiFeiJiPrefab, DaoJuDiaoLuoTr[3].position, DaoJuDiaoLuoTr[3].rotation);
+                    GameObject obj = (GameObject)Instantiate(ShuangYiFeiJiPrefab, DaoJuDiaoLuoTr[3].position, DaoJuDiaoLuoTr[3].rotation);
+                    SSMissionCleanup.GetInstance().AddObj(obj);
                     ShuangYiFeiJiTwRot.enabled = false;
                     for (int i = 0; i < ShuangYiFeiJiAniAy.Length; i++)
                     {
@@ -1617,7 +1629,8 @@ public class PlayerController : MonoBehaviour
                     FengKuangTwRot.enabled = false;
                     FengKuangAni.enabled = true;
                     SetAcitveChuanTouShuiHuaTX(false);
-                    Instantiate(FenKuangPrefab, DaoJuDiaoLuoTr[2].position, DaoJuDiaoLuoTr[2].rotation);
+                    GameObject obj = (GameObject)Instantiate(FenKuangPrefab, DaoJuDiaoLuoTr[2].position, DaoJuDiaoLuoTr[2].rotation);
+                    SSMissionCleanup.GetInstance().AddObj(obj);
                     FengKuangAni.transform.localScale = Vector3.zero;
                     FengKuangAni.SetBool("IsPlay", false);
                     break;
@@ -1628,14 +1641,16 @@ public class PlayerController : MonoBehaviour
                     {
                         pFeiBanPengZhuang.SetIsEnablePengZhuang(true);
                     }
-                    Instantiate(QianTingDt.LiZiPrefab, QianTingDt.LiZiSpawnPoint.position, QianTingDt.LiZiSpawnPoint.rotation);
+                    GameObject obj = (GameObject)Instantiate(QianTingDt.LiZiPrefab, QianTingDt.LiZiSpawnPoint.position, QianTingDt.LiZiSpawnPoint.rotation);
+                    SSMissionCleanup.GetInstance().AddObj(obj);
                     m_pChuan.gameObject.SetActive(true);
                     QianTingDt.QianTingObj.SetActive(false);
                     break;
                 }
             case DaoJuCtrl.DaoJuType.Tank:
                 {
-                    Instantiate(TankDt.LiZiPrefab, TankDt.LiZiSpawnPoint.position, TankDt.LiZiSpawnPoint.rotation);
+                    GameObject obj = (GameObject)Instantiate(TankDt.LiZiPrefab, TankDt.LiZiSpawnPoint.position, TankDt.LiZiSpawnPoint.rotation);
+                    SSMissionCleanup.GetInstance().AddObj(obj);
                     m_pChuan.gameObject.SetActive(true);
                     TankDt.TankObj.SetActive(false);
                     break;
@@ -1729,7 +1744,9 @@ public class PlayerController : MonoBehaviour
                     {
                         pFeiBanPengZhuang.SetIsEnablePengZhuang(false);
                     }
-                    Instantiate(QianTingDt.LiZiPrefab, QianTingDt.LiZiSpawnPoint.position, QianTingDt.LiZiSpawnPoint.rotation);
+                    GameObject obj = (GameObject)Instantiate(QianTingDt.LiZiPrefab, QianTingDt.LiZiSpawnPoint.position, QianTingDt.LiZiSpawnPoint.rotation);
+                    SSMissionCleanup.GetInstance().AddObj(obj);
+
                     m_pChuan.gameObject.SetActive(false);
                     QianTingDt.QianTingObj.SetActive(true);
                     StartCoroutine(SpawnQianTingYuLei());
@@ -1737,7 +1754,9 @@ public class PlayerController : MonoBehaviour
                 }
             case DaoJuCtrl.DaoJuType.Tank:
                 {
-                    Instantiate(TankDt.LiZiPrefab, TankDt.LiZiSpawnPoint.position, TankDt.LiZiSpawnPoint.rotation);
+                    GameObject obj = (GameObject)Instantiate(TankDt.LiZiPrefab, TankDt.LiZiSpawnPoint.position, TankDt.LiZiSpawnPoint.rotation);
+                    SSMissionCleanup.GetInstance().AddObj(obj);
+
                     m_pChuan.gameObject.SetActive(false);
                     TankDt.TankObj.SetActive(true);
                     StartCoroutine(SpawnTankAmmo());
@@ -1791,6 +1810,8 @@ public class PlayerController : MonoBehaviour
         bool isFollowNpc = false;
         int indexVal = DaoDanSpawnCount % SpawnDaoDanTr.Length;
         GameObject ammo = (GameObject)Instantiate(DaoDanPrefab, SpawnDaoDanTr[indexVal].position, SpawnDaoDanTr[indexVal].rotation);
+        SSMissionCleanup.GetInstance().AddObj(ammo);
+
         AmmoMoveCtrl ammoMoveCom = ammo.GetComponent<AmmoMoveCtrl>();
         AmmoMoveCtrl.AmmoDt ammoDt = new AmmoMoveCtrl.AmmoDt();
         Transform AimNpcTr = null;
@@ -1879,6 +1900,8 @@ public class PlayerController : MonoBehaviour
     {
         int indexVal = DiLeiDt.AmmoSpawnCount % DiLeiDt.SpawnAmmoTr.Length;
         GameObject ammo = (GameObject)Instantiate(DiLeiDt.AmmoPrefab, DiLeiDt.SpawnAmmoTr[indexVal].position, DiLeiDt.SpawnAmmoTr[indexVal].rotation);
+        SSMissionCleanup.GetInstance().AddObj(ammo);
+
         AmmoMoveCtrl ammoMoveCom = ammo.GetComponent<AmmoMoveCtrl>();
         AmmoMoveCtrl.AmmoDt ammoDt = new AmmoMoveCtrl.AmmoDt();
         ammoDt.HightVal = UnityEngine.Random.Range(2.5f, 5f);
@@ -1932,6 +1955,8 @@ public class PlayerController : MonoBehaviour
                 yield break;
             }
             ammo = (GameObject)Instantiate(QianTingDt.YuLeiPrefab, QianTingDt.YuLeiSpawnPointArray[indexVal].position, QianTingDt.YuLeiSpawnPointArray[indexVal].rotation);
+            SSMissionCleanup.GetInstance().AddObj(ammo);
+
             moveAmmo = ammo.GetComponent<AmmoMoveCtrl>();
             ammoDt.PosHit = ammo.transform.position + (ammo.transform.forward * UnityEngine.Random.Range(30f, 65f));
             moveAmmo.InitMoveAmmo(ammoDt);
@@ -1967,6 +1992,7 @@ public class PlayerController : MonoBehaviour
             }
             ammoDt.HightVal = UnityEngine.Random.Range(1, 4);
             ammo = (GameObject)Instantiate(TankDt.AmmoPrefab, TankDt.AmmoSpawnPointArray[indexVal].position, TankDt.AmmoSpawnPointArray[indexVal].rotation);
+            SSMissionCleanup.GetInstance().AddObj(ammo);
             moveAmmo = ammo.GetComponent<AmmoMoveCtrl>();
             ammoDt.PosHit = ammo.transform.position + (ammo.transform.forward * UnityEngine.Random.Range(25f, 75f));
             moveAmmo.InitMoveAmmo(ammoDt);

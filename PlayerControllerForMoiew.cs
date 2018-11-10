@@ -180,7 +180,8 @@ public class PlayerControllerForMoiew : MonoBehaviour
 			m_CameraShake.setCameraShakeImpulseValue();
 			m_HitStone.Play();
 			GameObject temp = (GameObject)Instantiate(m_HitEffectObj,transform.position,transform.rotation);
-			Destroy(temp,2.0f);
+            SSMissionCleanup.GetInstance().AddObj(temp);
+            Destroy(temp,2.0f);
 		}
 		if(other.tag == "texiao0")
 		{
@@ -188,7 +189,8 @@ public class PlayerControllerForMoiew : MonoBehaviour
 			m_FeibanAudio.Play();		
 		//	m_TeXiao0Audio.Play();
 			GameObject temp = (GameObject)Instantiate(m_TeXiao0Audio,transform.position,transform.rotation);
-			Destroy(temp,3.0f);
+            SSMissionCleanup.GetInstance().AddObj(temp);
+            Destroy(temp,3.0f);
 		}
 		if(other.tag == "texiao1")
 		{
@@ -196,7 +198,8 @@ public class PlayerControllerForMoiew : MonoBehaviour
 			m_FeibanAudio.Play();
 		//	m_TeXiao1Audio.Play();
 			GameObject temp = (GameObject)Instantiate(m_TeXiao1Audio,transform.position,transform.rotation);
-			Destroy(temp,3.0f);
+            SSMissionCleanup.GetInstance().AddObj(temp);
+            Destroy(temp,3.0f);
 		}
 		if(other.tag == "texiao2")
 		{
@@ -206,7 +209,8 @@ public class PlayerControllerForMoiew : MonoBehaviour
 			{
 				m_FeibanAudio.Play();
 				GameObject temp = (GameObject)Instantiate(m_TeXiao2Audio,transform.position,transform.rotation);
-				Destroy(temp,4.2f);
+                SSMissionCleanup.GetInstance().AddObj(temp);
+                Destroy(temp,4.2f);
 			}
 			else
 			{
@@ -219,7 +223,8 @@ public class PlayerControllerForMoiew : MonoBehaviour
 			m_FeibanAudio.Play();
 		//	m_TeXiao3Audio.Play();
 			GameObject temp = (GameObject)Instantiate(m_TeXiao3Audio,transform.position,transform.rotation);
-			Destroy(temp,3.0f);
+            SSMissionCleanup.GetInstance().AddObj(temp);
+            Destroy(temp,3.0f);
 		}
 		if(other.tag == "texiao4")
 		{
@@ -227,7 +232,8 @@ public class PlayerControllerForMoiew : MonoBehaviour
 			m_FeibanAudio.Play();
 		//	m_TeXiao4Audio.Play();
 			GameObject temp = (GameObject)Instantiate(m_TeXiao4Audio,transform.position,transform.rotation);
-			Destroy(temp,4.2f);
+            SSMissionCleanup.GetInstance().AddObj(temp);
+            Destroy(temp,4.2f);
 		}
 		if(other.tag == "texiao5")
 		{
@@ -235,7 +241,8 @@ public class PlayerControllerForMoiew : MonoBehaviour
 			m_PlayerAnimator.SetTrigger("IsTaitou");
 			m_FeibanAudio.Play();
 			GameObject temp = (GameObject)Instantiate(m_FeibanEffectObj,transform.position,transform.rotation);
-			Destroy(temp,2.0f);
+            SSMissionCleanup.GetInstance().AddObj(temp);
+            Destroy(temp,2.0f);
 		}
 		if(other.tag == "texiaoyin")
 		{
@@ -271,22 +278,25 @@ public class PlayerControllerForMoiew : MonoBehaviour
 		{
 			m_CameraShake.setCameraShakeImpulseValue();
 			m_HitWater.Play();
-			GameObject Tobject = (GameObject)Instantiate(m_HitWaterParticle,transform.position+transform.forward*m_BaozhaForward+Vector3.up*m_BaozhaUp,transform.rotation);
-			Destroy(Tobject,0.5f);
+			GameObject tobject = (GameObject)Instantiate(m_HitWaterParticle,transform.position+transform.forward*m_BaozhaForward+Vector3.up*m_BaozhaUp,transform.rotation);
+            SSMissionCleanup.GetInstance().AddObj(tobject);
+            Destroy(tobject,0.5f);
 		}
 		if(other.tag == "hitwater0")
 		{
 		//	m_CameraShake.setCameraShakeImpulseValue();
 			m_HitWater.Play();
-			GameObject Tobject = (GameObject)Instantiate(m_HitWaterParticle,transform.position+transform.forward*m_BaozhaForward+Vector3.up*m_BaozhaUp,transform.rotation);
-			Destroy(Tobject,0.5f);
+			GameObject tobject = (GameObject)Instantiate(m_HitWaterParticle,transform.position+transform.forward*m_BaozhaForward+Vector3.up*m_BaozhaUp,transform.rotation);
+            SSMissionCleanup.GetInstance().AddObj(tobject);
+            Destroy(tobject,0.5f);
 		}
 		if(other.tag == "dan1")
 		{
 			m_EatJiasuAudio.Play();
 			m_JiasuAudio.Play();
 			GameObject temp = (GameObject)Instantiate(m_JiasuPartical,other.transform.position+transform.forward*10.0f,other.transform.rotation);
-			Destroy(temp,0.5f);
+            SSMissionCleanup.GetInstance().AddObj(temp);
+            Destroy(temp,0.5f);
 			//Destroy(other.gameObject);
 			CheckDaoJuListObj(other.gameObject);
 		}
@@ -295,15 +305,17 @@ public class PlayerControllerForMoiew : MonoBehaviour
 			m_EatJiasuAudio.Play();
 			m_JiasuAudio.Play();
 			GameObject temp = (GameObject)Instantiate(m_JiasuPartical,other.transform.position+transform.forward,other.transform.rotation);
-			Destroy(temp,0.5f);
+            SSMissionCleanup.GetInstance().AddObj(temp);
+            Destroy(temp,0.5f);
 			//Destroy(other.gameObject);
 			CheckDaoJuListObj(other.gameObject);
 		}
 		if(other.tag == "zhong")
 		{
 			GameObject temp = (GameObject)Instantiate(m_JiashiPartical,other.transform.position,other.transform.rotation);
-			//Destroy(other.gameObject);
-			CheckDaoJuListObj(other.gameObject);
+            //Destroy(other.gameObject);
+            SSMissionCleanup.GetInstance().AddObj(temp);
+            CheckDaoJuListObj(other.gameObject);
 			Destroy(temp,0.5f);
 			m_EatJiashiAudio.Play();
 			m_JiashiAudio.Play();
@@ -339,7 +351,8 @@ public class PlayerControllerForMoiew : MonoBehaviour
 			m_FeibanAudio.Play();
 		//	m_TeXiao1Audio.Play();
 			GameObject temp = (GameObject)Instantiate(m_FeibanEffectObj,transform.position,transform.rotation);
-			Destroy(temp,4.2f);
+            SSMissionCleanup.GetInstance().AddObj(temp);
+            Destroy(temp,4.2f);
 
 		}
 		if(other.tag == "offshuihua")
