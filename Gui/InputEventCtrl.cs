@@ -21,6 +21,10 @@ public class InputEventCtrl : MonoBehaviour
 			_Instance = obj.AddComponent<InputEventCtrl>();
             _Instance.mListenPcInputEvent = obj.AddComponent<ListenPcInputEvent>();
             pcvr.GetInstance();
+            if (pcvr.GetInstance() != null)
+            {
+                pcvr.GetInstance().InitListenBtEvent();
+            }
         }
 		return _Instance;
 	}

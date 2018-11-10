@@ -76,11 +76,15 @@ public class Loading : MonoBehaviour
         {
             InputEventCtrl.GetInstance().mListenPcInputEvent.ClickCloseDongGanBtEvent += ClickStartBtOneEvent;
         }
+        else
+        {
+            InputEventCtrl.GetInstance().mListenPcInputEvent.ClickTVYaoKongEnterBtEvent += ClickStartBtOneEvent;
+        }
 
         if (m_InserNum >= m_CoinNumSet && GameMode == ReadGameInfo.GameMode.Oper.ToString())
         {
             UpdateTex();
-            ClickStartBtOneEvent(InputEventCtrl.ButtonState.DOWN);
+            //ClickStartBtOneEvent(InputEventCtrl.ButtonState.DOWN); 关闭自动开始游戏.
         }
         InputEventCtrl.GetInstance().OnCaiPiaJiChuPiaoEvent += OnCaiPiaJiChuPiaoEvent;
         InputEventCtrl.GetInstance().OnCaiPiaJiWuPiaoEvent += OnCaiPiaJiWuPiaoEvent;
@@ -124,15 +128,15 @@ public class Loading : MonoBehaviour
         }
 		else
 		{
-			if (pcvr.IsTestNoInput)
-			{
-				return;
-			}
+			//if (pcvr.IsTestNoInput)
+			//{
+			//	return;
+			//}
 
-			if(Input.GetKeyDown(KeyCode.T) && GameMode == ReadGameInfo.GameMode.Oper.ToString())
-			{
-				OnClickInsertBt();
-			}
+			//if(Input.GetKeyDown(KeyCode.T) && GameMode == ReadGameInfo.GameMode.Oper.ToString())
+			//{
+			//	OnClickInsertBt();
+			//}
 		}
 		OnLoadingClicked();
 	}
@@ -295,7 +299,9 @@ public class Loading : MonoBehaviour
 			timmerforstar += Time.deltaTime;
 			if(timmerforstar > 1.5f)
 			{
-                StartCoroutine (loadScene((LoadSceneCount % (Application.levelCount - 3)) + 2));
+                int sceneCount = (LoadSceneCount % (Application.levelCount - 3)) + 2;
+                Debug.Log("OnLoadingClicked -> sceneCount =================== " + sceneCount);
+                StartCoroutine (loadScene(sceneCount));
 				timmerstar = false;
                 LoadSceneCount++;
             }

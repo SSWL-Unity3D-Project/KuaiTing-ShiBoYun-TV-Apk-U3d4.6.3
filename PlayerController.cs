@@ -240,7 +240,7 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     public Transform SpawnJiFenTr;
 	public static float m_pTopSpeed = 100.0f;
-	private float throttle = 0.0f;
+	//private float throttle = 0.0f;
 	public bool canDrive = true;
 	public WheelCollider m_wheel;
 	public Transform m_pLookTarget;
@@ -707,7 +707,7 @@ public class PlayerController : MonoBehaviour
 	float SteerOffset = 0.05f;
 	void GetInput()
 	{
-		throttle = 1f;
+		//throttle = 1f;
         //throttle = pcvr.mGetPower;
         //if (!IsClickShaCheBt)
         //{
@@ -1013,10 +1013,10 @@ public class PlayerController : MonoBehaviour
 
 #if UNITY_EDITOR
 		if (!pcvr.bIsHardWare) {
-			string strA = sp.ToString() + "km/h";
+			string strA = "speed: " + sp.ToString() + "km/h";
 			GUI.Box(new Rect(0f, 0f, wVal, hVal), strA);
 			
-			string strB = "throttle "+throttle.ToString("F3");
+			string strB = "mSteer: " + mSteer.ToString("F3");
 			GUI.Box(new Rect(0f, hVal, wVal, hVal), strB);
 		}
 #endif

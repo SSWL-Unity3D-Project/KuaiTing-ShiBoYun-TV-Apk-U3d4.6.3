@@ -75,7 +75,8 @@ public class ReadGameInfo : MonoBehaviour
 			value = 7;
 			mHandleJson.WriteToFileXml(mFileName, "GameAudioVolume", value.ToString());
         }
-        GameAudioVolume = value;
+        //GameAudioVolume = value;
+        GameAudioVolume = 10; //游戏音量强制设置为最大.
 
         //游戏出彩票信息.
         readInfo = mHandleJson.ReadFromFileXml(mFileName, "IsPrintCaiPiao");
@@ -85,7 +86,8 @@ public class ReadGameInfo : MonoBehaviour
             mHandleJson.WriteToFileXml(mFileName, "IsPrintCaiPiao", readInfo);
         }
 
-        value = Convert.ToInt32(readInfo);
+        //value = Convert.ToInt32(readInfo);
+        value = 0; //是否出票强制修改为不出彩票.
         if (value == 1)
         {
             IsPrintCaiPiao = true;
@@ -140,8 +142,9 @@ public class ReadGameInfo : MonoBehaviour
             value = 2;
             mHandleJson.WriteToFileXml(mFileName, "Grade", value.ToString());
         }
-        mGrade = value;
-        
+        //mGrade = value;
+        mGrade = 2; //游戏难度等级强制设置为中等.
+
         //游戏运营模式.
         readInfo = mHandleJson.ReadFromFileXml(mFileName, "GAME_MODE");
         if (readInfo == null || readInfo == "")
@@ -156,7 +159,8 @@ public class ReadGameInfo : MonoBehaviour
             value = 0; //0->运营模式, 1->免费模式.
             mHandleJson.WriteToFileXml(mFileName, "GAME_MODE", value.ToString());
         }
-        m_pGameMode = value == 0 ? GameMode.Oper.ToString() : GameMode.Free.ToString();
+        //m_pGameMode = value == 0 ? GameMode.Oper.ToString() : GameMode.Free.ToString();
+        m_pGameMode = GameMode.Oper.ToString(); //游戏模式强制设置为运营模式.
 
         //游戏启动币数.
         readInfo = mHandleJson.ReadFromFileXml(mFileName, "START_COIN");
@@ -172,8 +176,9 @@ public class ReadGameInfo : MonoBehaviour
             value = 2;
             mHandleJson.WriteToFileXml(mFileName, "START_COIN", value.ToString());
         }
-        m_pStarCoinNum = value.ToString();
-        
+        //m_pStarCoinNum = value.ToString();
+        m_pStarCoinNum = "0"; //启动币数强制设置为0.
+
         //游戏最高记录.
         readInfo = mHandleJson.ReadFromFileXml(mFileName, "GAME_RECORD");
         if (readInfo == null || readInfo == "")
@@ -188,7 +193,8 @@ public class ReadGameInfo : MonoBehaviour
             value = 180;
             mHandleJson.WriteToFileXml(mFileName, "GAME_RECORD", value.ToString());
         }
-        GameRecordVal = value;
+        //GameRecordVal = value;
+        GameRecordVal = 180; //强制将最高纪录设置为180秒.
 
         //游戏语言信息.
         readInfo = mHandleJson.ReadFromFileXml(mFileName, "GAME_LANGUAGE");
@@ -204,7 +210,8 @@ public class ReadGameInfo : MonoBehaviour
             value = 0;
             mHandleJson.WriteToFileXml(mFileName, "GAME_LANGUAGE", value.ToString());
         }
-        GameLanguageVal = value;
+        //GameLanguageVal = value;
+        GameLanguageVal = 0; //强制设置为中文版.
     }
 
     public void FactoryReset()

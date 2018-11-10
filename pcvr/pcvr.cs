@@ -6,11 +6,11 @@ public class pcvr : MonoBehaviour
 	/// <summary>
 	/// 是否开启精锐加密校验.
 	/// </summary>
-	public static bool IsOpenJingRuiJiaMi = true;
+	public static bool IsOpenJingRuiJiaMi = false;
     /// <summary>
     /// 是否是硬件版.
     /// </summary>
-	static public bool bIsHardWare = true;
+	static public bool bIsHardWare = false;
 	/// <summary>
 	/// 测试去掉输入.
 	/// </summary>
@@ -41,25 +41,24 @@ public class pcvr : MonoBehaviour
 		}
 		return Instance;
 	}
-
+    
 	void FixedUpdate()
 	{
-        byte[] readBuf = MyCOMDevice.ComThreadClass.ReadByteMsg;
         if (bIsHardWare)
         {
+            byte[] readBuf = MyCOMDevice.ComThreadClass.ReadByteMsg;
             UpdatePcvrSteerVal(readBuf[30]);
 			ChangDongGanBtLedState();
+            UpdatePlayerCoinDt();
         }
-        UpdatePlayerCoinDt();
-    }
-
-    void Update()
-    {
-        if (!bIsHardWare)
+        else
         {
             UpdatePcvrSteerVal(0);
         }
+    }
 
+    void UpdateTest()
+    {
 //		if (Input.GetKeyUp(KeyCode.P))
 //		{
 //			OnGameOverCheckJingRuiJiaMi(); //test
@@ -109,6 +108,47 @@ public class pcvr : MonoBehaviour
     float TimeLastSteer = 0f;
     InputEventCtrl.ButtonState KeyBtA = InputEventCtrl.ButtonState.UP;
     InputEventCtrl.ButtonState KeyBtD = InputEventCtrl.ButtonState.UP;
+
+    public void InitListenBtEvent()
+    {
+        InputEventCtrl.GetInstance().mListenPcInputEvent.ClickTVYaoKongLeftBtEvent += OnClickSteerBtLeft;
+        InputEventCtrl.GetInstance().mListenPcInputEvent.ClickTVYaoKongRightBtEvent += OnClickSteerBtRight;
+    }
+
+    void OnClickSteerBtLeft(InputEventCtrl.ButtonState state)
+    {
+        switch (state)
+        {
+            case InputEventCtrl.ButtonState.DOWN:
+                {
+                    KeyBtA = InputEventCtrl.ButtonState.DOWN;
+                    break;
+                }
+            case InputEventCtrl.ButtonState.UP:
+                {
+                    KeyBtA = InputEventCtrl.ButtonState.UP;
+                    break;
+                }
+        }
+    }
+
+    void OnClickSteerBtRight(InputEventCtrl.ButtonState state)
+    {
+        switch (state)
+        {
+            case InputEventCtrl.ButtonState.DOWN:
+                {
+                    KeyBtD = InputEventCtrl.ButtonState.DOWN;
+                    break;
+                }
+            case InputEventCtrl.ButtonState.UP:
+                {
+                    KeyBtD = InputEventCtrl.ButtonState.UP;
+                    break;
+                }
+        }
+    }
+
     /// <summary>
     /// 更新转向信息.
     /// </summary>
@@ -118,27 +158,27 @@ public class pcvr : MonoBehaviour
         {
             //mGetSteer = Input.GetAxis("Horizontal");
             //return;
-            if (Input.GetKeyDown(KeyCode.A))
-            {
-                KeyBtA = InputEventCtrl.ButtonState.DOWN;
-                pcvrSteerVal = (byte)SteerEnum.Left;
-            }
+            //if (Input.GetKeyDown(KeyCode.A))
+            //{
+            //    KeyBtA = InputEventCtrl.ButtonState.DOWN;
+            //    pcvrSteerVal = (byte)SteerEnum.Left;
+            //}
 
-            if (Input.GetKeyDown(KeyCode.D))
-            {
-                KeyBtD = InputEventCtrl.ButtonState.DOWN;
-                pcvrSteerVal = (byte)SteerEnum.Right;
-            }
+            //if (Input.GetKeyDown(KeyCode.D))
+            //{
+            //    KeyBtD = InputEventCtrl.ButtonState.DOWN;
+            //    pcvrSteerVal = (byte)SteerEnum.Right;
+            //}
 
-            if (Input.GetKeyUp(KeyCode.A))
-            {
-                KeyBtA = InputEventCtrl.ButtonState.UP;
-            }
+            //if (Input.GetKeyUp(KeyCode.A))
+            //{
+            //    KeyBtA = InputEventCtrl.ButtonState.UP;
+            //}
 
-            if (Input.GetKeyUp(KeyCode.D))
-            {
-                KeyBtD = InputEventCtrl.ButtonState.UP;
-            }
+            //if (Input.GetKeyUp(KeyCode.D))
+            //{
+            //    KeyBtD = InputEventCtrl.ButtonState.UP;
+            //}
 
             if (KeyBtA == InputEventCtrl.ButtonState.UP && KeyBtD == InputEventCtrl.ButtonState.UP)
             {
