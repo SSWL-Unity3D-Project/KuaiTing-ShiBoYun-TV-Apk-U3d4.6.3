@@ -15,9 +15,9 @@ public class GameMovieCtrl : MonoBehaviour {
 	// Use this for initialization
 	void Start()
 	{
-		Screen.SetResolution(1280, 1024, true);
+		//Screen.SetResolution(1280, 1024, true);
 		//Screen.SetResolution(1360, 768, true);
-		//Screen.SetResolution(1280, 720, true);
+		Screen.SetResolution(1280, 720, false);
 
         _instance = this;
 		IsActivePlayer = true;

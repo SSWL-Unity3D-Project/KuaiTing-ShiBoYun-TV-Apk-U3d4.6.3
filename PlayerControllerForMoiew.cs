@@ -78,9 +78,9 @@ public class PlayerControllerForMoiew : MonoBehaviour
             Screen.SetResolution((int)(1360*0.5), (int)(768*0.5), false);
         }
 		else {
-			Screen.SetResolution(1280, 1024, true);
+			//Screen.SetResolution(1280, 1024, true);
 			//Screen.SetResolution(1360, 768, true);
-            //Screen.SetResolution(1280, 720, true);
+            Screen.SetResolution(1280, 720, false);
         }
 
 		m_BeijingAudio.Play();

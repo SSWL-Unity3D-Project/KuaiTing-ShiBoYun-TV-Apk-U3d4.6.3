@@ -2,13 +2,17 @@
 using System.Collections;
 using System;
 
-public class Loading : MonoBehaviour
+public class Loading : SSGameMono
 {
-	/// <summary>
-	/// 加密校验中.
-	/// </summary>
-	//public GameObject m_JiaMiJiaoYanZhong;
-	[HideInInspector]
+    /// <summary>
+    /// UI摄像机.
+    /// </summary>
+    public UICamera mUICamera;
+    /// <summary>
+    /// 加密校验中.
+    /// </summary>
+    //public GameObject m_JiaMiJiaoYanZhong;
+    [HideInInspector]
     public SSLedByAudioCtrl mLedAudioScript;
     public LogoAnimation mLogoAni;
     private string CoinNumSet = "1";
@@ -29,7 +33,8 @@ public class Loading : MonoBehaviour
 	private bool m_IsStartGame =false;
 	public AudioSource m_TbSource;
 	public AudioSource m_BeginSource;
-	public GameObject m_Loading;
+    public AudioSource m_LevelSource;
+    public GameObject m_Loading;
 	public GameObject m_Tishi;
 	private string GameMode = "";
 
@@ -44,7 +49,8 @@ public class Loading : MonoBehaviour
 	private float timmerforstar = 0.0f;
 	public static bool m_HasBegin = false;
 	public bool IsLuPingTest;
-	void Start ()
+    internal SSUICenter m_SSUICenterCom;
+    void Start ()
 	{
 		if (IsLuPingTest)
         {
@@ -78,6 +84,7 @@ public class Loading : MonoBehaviour
         else
         {
             InputEventCtrl.GetInstance().mListenPcInputEvent.ClickTVYaoKongEnterBtEvent += ClickStartBtOneEvent;
+            InputEventCtrl.GetInstance().mListenPcInputEvent.ClickTVYaoKongExitBtEvent += ClickTVYaoKongExitBtEvent;
         }
 
         if (m_InserNum >= m_CoinNumSet && GameMode == ReadGameInfo.GameMode.Oper.ToString())
@@ -85,8 +92,26 @@ public class Loading : MonoBehaviour
             UpdateTex();
             //ClickStartBtOneEvent(InputEventCtrl.ButtonState.DOWN); 关闭自动开始游戏.
         }
+
+        m_SSUICenterCom = gameObject.AddComponent<SSUICenter>();
+        if (mUICamera != null)
+        {
+            m_SSUICenterCom.Init(mUICamera.transform);
+        }
+        
         InputEventCtrl.GetInstance().OnCaiPiaJiChuPiaoEvent += OnCaiPiaJiChuPiaoEvent;
         InputEventCtrl.GetInstance().OnCaiPiaJiWuPiaoEvent += OnCaiPiaJiWuPiaoEvent;
+    }
+
+    private void ClickTVYaoKongExitBtEvent(InputEventCtrl.ButtonState val)
+    {
+        if (val == InputEventCtrl.ButtonState.UP)
+        {
+            if (m_SSUICenterCom != null)
+            {
+                m_SSUICenterCom.SpawnExitGameDlg();
+            }
+        }
     }
 
     void OnCaiPiaJiWuPiaoEvent(pcvrTXManage.CaiPiaoJi val)
@@ -146,7 +171,26 @@ public class Loading : MonoBehaviour
         {
 			return;
 		}
-		OnClickBeginBt();
+
+        if (m_SSUICenterCom != null && m_SSUICenterCom.m_ExitGameUI != null)
+        {
+            return;
+        }
+
+        if (m_IsStartGame == true)
+        {
+            return;
+        }
+
+        if (mLevelSelectUI == null)
+        {
+            SpawnLevelSelectUI();
+        }
+        else
+        {
+            RemoveLevelSelectUI();
+            OnClickBeginBt();
+        }
 	}
 
 	void ClickSetEnterBtEvent(InputEventCtrl.ButtonState val)
@@ -202,17 +246,27 @@ public class Loading : MonoBehaviour
 			m_IsBeginOk = true;
 			m_InsertTex.enabled = false;
 			m_BeginTex.enabled =true;
-			m_pTishiTexture.enabled = true;
+
+            if (m_pTishiTexture.gameObject.activeInHierarchy == true)
+            {
+                m_pTishiTexture.enabled = true;
+            }
 			m_PressTimmer+=(Time.deltaTime / Time.timeScale);
 			if(m_PressTimmer >= 0.0f && m_PressTimmer <= 0.5f)
 			{
 				m_BeginTex.enabled =true;
-				m_pTishiTexture.mainTexture = m_pTexture[0];
+                if (m_pTishiTexture.gameObject.activeInHierarchy == true)
+                {
+                    m_pTishiTexture.mainTexture = m_pTexture[0];
+                }
 			}
 			else if(m_PressTimmer > 0.5f && m_PressTimmer <= 1.0f)
 			{
 				m_BeginTex.enabled =false;
-				m_pTishiTexture.mainTexture = m_pTexture[1];
+                if (m_pTishiTexture.gameObject.activeInHierarchy == true)
+                {
+                    m_pTishiTexture.mainTexture = m_pTexture[1];
+                }
 			}
 			else
 			{
@@ -290,7 +344,25 @@ public class Loading : MonoBehaviour
 			m_HasBegin = true;
 		}
 	}
-    static int LoadSceneCount;
+    
+    int _mLoadSceneCount = 0;
+    /// <summary>
+    /// 加载游戏的关卡信息.
+    /// </summary>
+    [HideInInspector]
+    public int mLoadSceneCount
+    {
+        set
+        {
+            Debug.Log("Loading -> mLoadSceneCount == " + value);
+            _mLoadSceneCount = value;
+        }
+        get
+        {
+            return _mLoadSceneCount;
+        }
+    }
+    //static int LoadSceneCount;
 	void OnLoadingClicked()
 	{
 		if(timmerstar)
@@ -298,18 +370,66 @@ public class Loading : MonoBehaviour
 			timmerforstar += Time.deltaTime;
 			if(timmerforstar > 1.5f)
 			{
-                int sceneCount = (LoadSceneCount % (Application.levelCount - 3)) + 2;
+                int sceneCount = (mLoadSceneCount % (Application.levelCount - 3)) + 2;
                 Debug.Log("OnLoadingClicked -> sceneCount =================== " + sceneCount);
                 StartCoroutine (loadScene(sceneCount));
 				timmerstar = false;
-                LoadSceneCount++;
+                //LoadSceneCount++;
             }
 		}
 	}
 
-	/*public void SetActiveJiaMiJiaoYan(bool isActive)
+    /*public void SetActiveJiaMiJiaoYan(bool isActive)
 	{
 		m_LastJiaoYanTime = Time.time;
 		m_JiaMiJiaoYanZhong.SetActive(isActive);
 	}*/
+    
+    /// <summary>
+    /// 游戏场景选择控制脚本.
+    /// </summary>
+    [HideInInspector]
+    public LevelSelectUI mLevelSelectUI;
+    /// <summary>
+    /// 产生选择游戏场景UI.
+    /// </summary>
+    void SpawnLevelSelectUI()
+    {
+        if (mUICamera == null)
+        {
+            SSDebug.LogWarning("SpawnLevelSelectUI -> mUICamera was null");
+            return;
+        }
+
+        if (mLevelSelectUI == null)
+        {
+            GameObject objPrefab = (GameObject)Resources.Load("Prefab/Gui/LevelSelect/LevelSelect");
+            if (objPrefab != null)
+            {
+                SSDebug.Log("SpawnLevelSelectUI...");
+                GameObject obj = (GameObject)Instantiate(objPrefab, mUICamera.transform);
+                mLevelSelectUI = obj.GetComponent<LevelSelectUI>();
+                mLevelSelectUI.Init(this);
+
+                if (m_pTishiTexture != null)
+                {
+                    m_pTishiTexture.gameObject.SetActive(false);
+                }
+            }
+            else
+            {
+                SSDebug.LogWarning("SpawnLevelSelectUI -> objPrefab was null");
+            }
+        }
+    }
+
+    void RemoveLevelSelectUI()
+    {
+        if (mLevelSelectUI != null)
+        {
+            mLevelSelectUI.RemoveSelf();
+            mLevelSelectUI = null;
+            Resources.UnloadUnusedAssets();
+        }
+    }
 }

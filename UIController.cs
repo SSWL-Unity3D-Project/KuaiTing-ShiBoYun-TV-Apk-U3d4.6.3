@@ -141,8 +141,8 @@ public class UIController : SSGameMono
 	private bool m_HasTishi = false;
 	public AudioSource m_BeginDaojishiAudio;
 	private bool m_HasPlay = false;
-
-	void Start ()
+    internal SSUICenter m_SSUICenterCom;
+    void Start ()
     {
         chile = 0;
 		m_pScale.enabled = false;
@@ -186,8 +186,26 @@ public class UIController : SSGameMono
 		XkGameCtrl.IsLoadingLevel = false;
         ShowJiFenInfo(0);
 		UpdateGameTime();
+        m_SSUICenterCom = gameObject.AddComponent<SSUICenter>();
+        if (m_UICamera != null)
+        {
+            m_SSUICenterCom.Init(m_UICamera.transform);
+        }
+
         InputEventCtrl.GetInstance().OnCaiPiaJiChuPiaoEvent += OnCaiPiaJiChuPiaoEvent;
         InputEventCtrl.GetInstance().OnCaiPiaJiWuPiaoEvent += OnCaiPiaJiWuPiaoEvent;
+        InputEventCtrl.GetInstance().mListenPcInputEvent.ClickTVYaoKongExitBtEvent += ClickTVYaoKongExitBtEvent;
+    }
+
+    private void ClickTVYaoKongExitBtEvent(InputEventCtrl.ButtonState val)
+    {
+        if (val == InputEventCtrl.ButtonState.UP)
+        {
+            if (m_SSUICenterCom != null)
+            {
+                m_SSUICenterCom.SpawnExitGameDlg();
+            }
+        }
     }
 
     void OnCaiPiaJiWuPiaoEvent(pcvrTXManage.CaiPiaoJi val)
