@@ -24,10 +24,10 @@ public class TimeScaleSet : MonoBehaviour
 			{
 				Time.timeScale = TimeScaleset;
 			}
-			if(m_IsCameraEffect)
-			{
-				m_CameraEffect.SampleStrength = m_CameraEffectSet;
-			}
+			//if(m_IsCameraEffect)
+			//{
+			//	m_CameraEffect.SampleStrength = m_CameraEffectSet;
+			//}
 		}
 	}
 }
