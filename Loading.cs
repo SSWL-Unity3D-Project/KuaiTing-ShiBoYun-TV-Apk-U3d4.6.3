@@ -41,7 +41,7 @@ public class Loading : SSGameMono
 	public UITexture m_pTishiTexture;
 	public Texture[] m_pTexture;
 
-	public MovieTexture m_MovieTex;
+	//public MovieTexture m_MovieTex;
 	public UITexture m_FreeTexture;
 	public GameObject m_ToubiObj;
 
@@ -51,8 +51,14 @@ public class Loading : SSGameMono
 	public bool IsLuPingTest;
     internal SSUICenter m_SSUICenterCom;
     void Start ()
-	{
-		if (IsLuPingTest)
+    {
+        XKGameVersionCtrl gameVersionCom = gameObject.AddComponent<XKGameVersionCtrl>();
+        if (gameVersionCom != null)
+        {
+            gameVersionCom.Init();
+        }
+
+        if (IsLuPingTest)
         {
 			gameObject.SetActive(false);
 		}

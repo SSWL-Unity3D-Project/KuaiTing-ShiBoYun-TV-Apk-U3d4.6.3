@@ -3,7 +3,7 @@
 public class XKGameVersionCtrl : MonoBehaviour
 {
     UILabel VersionLB;
-    static string _GameVersion = "Version: 20180831";
+    static string _GameVersion = "Version: 20181121.01";
     public static string GameVersion
     {
         get
@@ -48,7 +48,7 @@ public class XKGameVersionCtrl : MonoBehaviour
         {
             if (Time.time - m_LastDrawTime < 15f)
             {
-                Rect rect = new Rect(15f, 15f, 300f, 30f);
+                Rect rect = new Rect(15f, 15f, 200f, 20f);
                 GUI.Box(rect, "");
                 GUI.color = Color.red;
                 GUI.Label(rect, GameVersion);

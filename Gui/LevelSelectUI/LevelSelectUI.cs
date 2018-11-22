@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class LevelSelectUI : MonoBehaviour
 {
@@ -23,6 +24,7 @@ public class LevelSelectUI : MonoBehaviour
         set
         {
             _mSelectLevel = value;
+            mLoadingCom.mLoadSceneCount = value - 1;
             Debug.Log("LevelSelectUI -> Level " + _mSelectLevel);
         }
         get
@@ -86,10 +88,92 @@ public class LevelSelectUI : MonoBehaviour
             loadingCom.mGameLinkPlayer.SetAcitveStartBt(false);
             loadingCom.mGameLinkPlayer.SetActiveLinkNameParent(false);
         }*/
+
+        InputEventCtrl.GetInstance().mListenPcInputEvent.ClickTVYaoKongLeftBtEvent += ClickTVYaoKongLeftBtEvent;
+        InputEventCtrl.GetInstance().mListenPcInputEvent.ClickTVYaoKongRightBtEvent += ClickTVYaoKongRightBtEvent;
     }
 
-    void Update()
+    private void ClickTVYaoKongLeftBtEvent(InputEventCtrl.ButtonState val)
     {
+        if (PlayerControllerForMoiew.GetInstance() != null
+            && PlayerControllerForMoiew.GetInstance().mLoading != null
+            && PlayerControllerForMoiew.GetInstance().mLoading.m_SSUICenterCom != null
+            && PlayerControllerForMoiew.GetInstance().mLoading.m_SSUICenterCom.m_ExitGameUI != null)
+        {
+            //有退出界面时，不允许选关界面响应选择.
+            return;
+        }
+
+        if (val == InputEventCtrl.ButtonState.DOWN)
+        {
+            return;
+        }
+
+        if (mLoadingCom != null && mLoadingCom.m_LevelSource != null)
+        {
+            mLoadingCom.m_LevelSource.Play();
+        }
+        TimeLastSelect = Time.realtimeSinceStartup;
+        int level = mSelectLevel;
+        level--;
+        if (level < 1)
+        {
+            level = 4;
+        }
+        mSelectLevel = level;
+
+        //向左转动.
+        string trigger = "left0" + mSelectLevel;
+        mAnimator.SetTrigger(trigger);
+        Debug.Log("aniName -> " + trigger);
+    }
+
+    private void ClickTVYaoKongRightBtEvent(InputEventCtrl.ButtonState val)
+    {
+        if (PlayerControllerForMoiew.GetInstance() != null
+            && PlayerControllerForMoiew.GetInstance().mLoading != null
+            && PlayerControllerForMoiew.GetInstance().mLoading.m_SSUICenterCom != null
+            && PlayerControllerForMoiew.GetInstance().mLoading.m_SSUICenterCom.m_ExitGameUI != null)
+        {
+            //有退出界面时，不允许选关界面响应选择.
+            return;
+        }
+
+        if (val == InputEventCtrl.ButtonState.DOWN)
+        {
+            return;
+        }
+
+        if (mLoadingCom != null && mLoadingCom.m_LevelSource != null)
+        {
+            mLoadingCom.m_LevelSource.Play();
+        }
+        TimeLastSelect = Time.realtimeSinceStartup;
+        int level = mSelectLevel;
+        level++;
+        if (level > 4)
+        {
+            level = 1;
+        }
+        mSelectLevel = level;
+
+        //向右转动.
+        string trigger = "right0" + mSelectLevel;
+        mAnimator.SetTrigger(trigger);
+        Debug.Log("aniName -> " + trigger);
+    }
+
+    void UpdateTmp()
+    {
+        if (PlayerControllerForMoiew.GetInstance() != null
+            && PlayerControllerForMoiew.GetInstance().mLoading != null
+            && PlayerControllerForMoiew.GetInstance().mLoading.m_SSUICenterCom != null
+            && PlayerControllerForMoiew.GetInstance().mLoading.m_SSUICenterCom.m_ExitGameUI != null)
+        {
+            //有退出界面时，不允许选关界面响应选择.
+            return;
+        }
+
         float steerVal = pcvr.GetInstance().mGetSteer;
         if (steerVal > 0f && Time.realtimeSinceStartup - TimeLastSelect > 0.5f)
         {
@@ -142,7 +226,6 @@ public class LevelSelectUI : MonoBehaviour
     public void HiddenSelf()
     {
         gameObject.SetActive(false);
-        mLoadingCom.mLoadSceneCount = mSelectLevel;
     }
 
     bool IsRemoveSelf = false;
@@ -151,6 +234,8 @@ public class LevelSelectUI : MonoBehaviour
         if (IsRemoveSelf == false)
         {
             IsRemoveSelf = true;
+            InputEventCtrl.GetInstance().mListenPcInputEvent.ClickTVYaoKongLeftBtEvent -= ClickTVYaoKongLeftBtEvent;
+            InputEventCtrl.GetInstance().mListenPcInputEvent.ClickTVYaoKongRightBtEvent -= ClickTVYaoKongRightBtEvent;
             Destroy(gameObject);
         }
     }

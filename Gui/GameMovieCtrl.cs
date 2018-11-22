@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class GameMovieCtrl : MonoBehaviour {
-	public MovieTexture Movie;
+	//public MovieTexture Movie;
 	AudioSource AudioSourceObj;
 	bool IsStopMovie;
 	public static bool IsActivePlayer;
@@ -28,12 +27,12 @@ public class GameMovieCtrl : MonoBehaviour {
 	void PlayMovie()
 	{
 		renderer.enabled = true;
-		renderer.material.mainTexture = Movie;
-		Movie.loop = true;
-		Movie.Play();
+		//renderer.material.mainTexture = Movie;
+		//Movie.loop = true;
+		//Movie.Play();
 		
 		if (AudioSourceObj != null) {
-			AudioSourceObj.clip = Movie.audioClip;
+			//AudioSourceObj.clip = Movie.audioClip;
 			AudioSourceObj.enabled = true;
 			AudioSourceObj.Play();
 		}
@@ -45,7 +44,7 @@ public class GameMovieCtrl : MonoBehaviour {
 			return;
 		}
 		IsStopMovie = true;
-		Movie.Stop();
+		//Movie.Stop();
 		if (AudioSourceObj != null) {
 			AudioSourceObj.enabled = false;
 		}

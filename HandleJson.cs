@@ -39,6 +39,7 @@ public class HandleJson {
 	//valueStr: write the value to the file
 	public void WriteToFileXml(string fileName, string attribute, string valueStr)
 	{
+        return;
 		string filepath = Application.dataPath + "/" + fileName;
 		#if UNITY_ANDROID
 		filepath = Application.persistentDataPath + "//" + fileName;
@@ -75,14 +76,15 @@ public class HandleJson {
 
 	
 	public void WriteToFilePathXml(string filepath, string attribute, string valueStr)
-	{
-		//string filepath = Application.dataPath + "/" + fileName;
-		#if UNITY_ANDROID
-//		filepath = Application.persistentDataPath + "//" + fileName;
-		#endif
-		
-		//create file
-		if(!File.Exists (filepath))
+    {
+        return;
+        //string filepath = Application.dataPath + "/" + fileName;
+#if UNITY_ANDROID
+        //		filepath = Application.persistentDataPath + "//" + fileName;
+#endif
+
+        //create file
+        if (!File.Exists (filepath))
 		{
 			XmlDocument xmlDoc = new XmlDocument();
 			XmlElement root = xmlDoc.CreateElement("transforms");
@@ -115,8 +117,9 @@ public class HandleJson {
 	//int aaa = int.Parse(valueStr);
 	//int.TryParse(valueStr, out aaa);
 	public string ReadFromFileXml(string fileName, string attribute)
-	{
-		string filepath = Application.dataPath + "/" + fileName;
+    {
+        return "";
+        string filepath = Application.dataPath + "/" + fileName;
 		#if UNITY_ANDROID
 		filepath = Application.persistentDataPath + "//" + fileName;
 		#endif
@@ -147,12 +150,13 @@ public class HandleJson {
 	}
 
 	public string ReadFromFilePathXml(string filepath, string attribute)
-	{
-		//string filepath = Application.dataPath + "/" + fileName;
-		#if UNITY_ANDROID
-		//filepath = Application.persistentDataPath + "//" + fileName;
-		#endif
-		string valueStr = null;
+    {
+        return "";
+        //string filepath = Application.dataPath + "/" + fileName;
+#if UNITY_ANDROID
+        //filepath = Application.persistentDataPath + "//" + fileName;
+#endif
+        string valueStr = null;
 		
 		if(File.Exists (filepath))
 		{
@@ -169,11 +173,4 @@ public class HandleJson {
 		
 		return valueStr;
 	}
-
-	#region handle ini file
-	[DllImport("kernel32.dll")]
-	public extern static int GetPrivateProfileStringA(string segName, string keyName, string sDefault, byte[] buffer, int iLen, string fileName);
-	[DllImport("kernel32.dll")]
-	public extern static int WritePrivateProfileString(string segName, string keyName, string sValue, string fileName);
-	#endregion
 }

@@ -9,8 +9,7 @@ public class PlayerController : MonoBehaviour
     /// <summary>
     /// 最大圈数.
     /// </summary>
-    [Range(1, 10)]
-    public int QuanShuMax = 1;
+    internal int QuanShuMax = 1;
     int QuanShuCount = 0;
     float TimeQuanShuVal = 0f;
     /// <summary>
@@ -474,7 +473,8 @@ public class PlayerController : MonoBehaviour
 		transform.eulerAngles = new Vector3(PathPoint[0].eulerAngles.x,PathPoint[0].eulerAngles.y,PathPoint[0].eulerAngles.z);
 		m_WaterDirection = m_OldWaterDirection = PathPoint[1].position - PathPoint[0].position;
 		Invoke("DelayCallClickShaCheBtEvent", 0.5f);
-	}
+        QuanShuMax = SSGameDataCtrl.GetInstance().m_PlayerData.QuanShuMax;
+    }
     
 	void DelayCallClickShaCheBtEvent()
 	{
